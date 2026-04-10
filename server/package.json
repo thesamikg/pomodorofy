@@ -1,0 +1,17 @@
+{
+  "name": "pomodorofy-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js",
+    "check": "node --check index.js && node --check routes/auth.js && node --check middleware/tokenRefresh.js && node --check utils/spotify.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}

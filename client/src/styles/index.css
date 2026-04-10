@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --panel-solid: #ffffff;
+  --line: rgba(39, 75, 120, 0.12);
+  --line-strong: rgba(39, 75, 120, 0.22);
+  --text: #274b78;
+  --muted: #7a91ab;
+  --accent: #4b8090;
+  --primary: #274b78;
+  --primary-strong: #274b78;
+  --secondary: #4b8090;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+}
+
+body::before {
+  content: none;
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: auto;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(75, 128, 144, 0.22);
+  color: #274b78;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(39, 75, 120, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(75, 128, 144, 0.32);
+}
+
+@layer components {
+  .page-shell {
+    @apply relative isolate min-h-screen overflow-hidden;
+  }
+
+  .section-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .glass-panel {
+    background: var(--panel);
+    @apply rounded-[28px] border shadow-glow;
+    border-color: var(--line);
+  }
+
+  .button-primary {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-medium text-base text-white transition duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+    background: var(--primary-strong);
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center rounded-full border px-6 py-3 font-medium transition duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+    background: #ffffff;
+    border-color: rgba(39, 75, 120, 0.14);
+    color: #274b78;
+  }
+
+  .tag-pill {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-sm;
+    background: rgba(75, 128, 144, 0.08);
+    border-color: rgba(75, 128, 144, 0.14);
+    color: #274b78;
+  }
+
+  .headline {
+    @apply font-heading text-4xl font-semibold tracking-tight text-brand sm:text-5xl lg:text-7xl;
+  }
+
+  .subcopy {
+    @apply text-base leading-7 text-brand/70 sm:text-lg;
+  }
+
+  .input-shell {
+    @apply rounded-2xl border px-4 py-3 focus:outline-none focus:ring-2;
+    background: #ffffff;
+    border-color: rgba(39, 75, 120, 0.18);
+    color: #274b78;
+    --tw-ring-color: rgba(75, 128, 144, 0.22);
+  }
+
+  .input-shell::placeholder {
+    color: rgba(39, 75, 120, 0.46);
+  }
+}
