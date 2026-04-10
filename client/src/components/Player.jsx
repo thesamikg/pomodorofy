@@ -17,7 +17,7 @@ function Player({
 }) {
   return (
     <section className="glass-panel p-5 sm:p-6">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm uppercase tracking-[0.24em] text-brand/50">
             Spotify Player
@@ -27,7 +27,7 @@ function Player({
           </h2>
         </div>
         {user ? (
-          <div className="flex items-center gap-3 rounded-full border border-brand/10 bg-surface px-3 py-2">
+          <div className="flex min-w-0 items-center gap-3 rounded-full border border-brand/10 bg-surface px-3 py-2 sm:max-w-[260px]">
             {user.images?.[0]?.url ? (
               <img
                 alt={`${user.display_name} avatar`}
@@ -39,8 +39,8 @@ function Player({
                 {user.display_name?.[0] || "S"}
               </div>
             )}
-            <div className="hidden text-right sm:block">
-              <p className="text-sm text-brand">{user.display_name}</p>
+            <div className="min-w-0 text-left sm:text-right">
+              <p className="truncate text-sm text-brand">{user.display_name}</p>
               <p className="text-xs uppercase tracking-[0.22em] text-brand/45">
                 {user.product}
               </p>
@@ -83,7 +83,7 @@ function Player({
       ) : null}
 
       <div className="mt-6 rounded-[28px] border border-brand/10 bg-surface p-5">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           {currentTrack?.albumArt ? (
             <img
               alt={`${currentTrack.name} cover art`}
@@ -99,10 +99,10 @@ function Player({
             <p className="text-sm uppercase tracking-[0.24em] text-brand/45">
               Now playing
             </p>
-            <p className="mt-2 truncate text-lg font-medium text-brand">
+            <p className="mt-2 text-lg font-medium text-brand sm:truncate">
               {currentTrack?.name || "Choose a playlist and start a focus block"}
             </p>
-            <p className="mt-1 truncate text-sm text-brand/55">
+            <p className="mt-1 text-sm text-brand/55 sm:truncate">
               {currentTrack?.artist || "Playback controls appear here when Spotify is active"}
             </p>
             <p className="mt-3 text-xs uppercase tracking-[0.24em] text-brand/45">
@@ -133,7 +133,7 @@ function Player({
             </button>
           </div>
 
-          <label className="flex w-full max-w-xs items-center gap-3 text-brand/70">
+          <label className="flex w-full items-center gap-3 text-brand/70 sm:max-w-xs">
             <Volume2 className="h-4 w-4 shrink-0" />
             <input
               aria-label="Playback volume"

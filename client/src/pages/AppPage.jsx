@@ -187,20 +187,20 @@ function AppPage() {
     <div className="page-shell">
       <div className="section-shell pt-5">
         <header className="glass-panel flex flex-col gap-5 px-5 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
-          <Link className="flex items-center gap-3" to="/">
+          <Link className="flex min-w-0 items-center gap-3" to="/">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand text-white">
               <Sparkles className="h-5 w-5" />
             </div>
-            <div>
-              <p className="font-heading text-xl text-brand">Pomodorofy</p>
-              <p className="text-sm text-brand/55">
+            <div className="min-w-0">
+              <p className="truncate font-heading text-xl text-brand">Pomodorofy</p>
+              <p className="truncate text-sm text-brand/55">
                 Deep work timer with Spotify playback control
               </p>
             </div>
           </Link>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             {spotify.user ? (
-              <div className="flex items-center gap-3 rounded-full border border-brand/10 bg-surface px-3 py-2">
+              <div className="flex min-w-0 items-center gap-3 rounded-full border border-brand/10 bg-surface px-3 py-2 sm:max-w-[280px]">
                 {spotify.user.images?.[0]?.url ? (
                   <img
                     alt={`${spotify.user.display_name} avatar`}
@@ -212,22 +212,22 @@ function AppPage() {
                     {spotify.user.display_name?.[0] || "S"}
                   </div>
                 )}
-                <div>
-                  <p className="text-sm text-brand">{spotify.user.display_name}</p>
-                  <p className="text-xs text-brand/55">Spotify connected</p>
+                <div className="min-w-0">
+                  <p className="truncate text-sm text-brand">{spotify.user.display_name}</p>
+                  <p className="truncate text-xs text-brand/55">Spotify connected</p>
                 </div>
               </div>
             ) : null}
             <button
               aria-label="Open settings"
-              className="button-secondary gap-2"
+              className="button-secondary w-full gap-2 sm:w-auto"
               onClick={() => setSettingsOpen(true)}
               type="button"
             >
               <Settings2 className="h-4 w-4" />
               Settings
             </button>
-            <Link className="button-secondary" to="/">
+            <Link className="button-secondary w-full sm:w-auto" to="/">
               Back to landing
             </Link>
           </div>

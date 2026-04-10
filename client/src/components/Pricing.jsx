@@ -16,7 +16,7 @@ const tiers = [
   },
   {
     name: "Pro",
-    price: "$6",
+    price: "$5",
     cadence: "/mo",
     description: "For solo builders who want Spotify-driven focus without limits.",
     features: [
@@ -26,18 +26,6 @@ const tiers = [
       "Auto-start flows",
     ],
     featured: true,
-  },
-  {
-    name: "Team",
-    price: "$12",
-    cadence: "/user/mo",
-    description: "Shared momentum for small teams that protect deep work together.",
-    features: [
-      "Shared dashboards",
-      "Slack integration",
-      "Team streaks",
-      "Priority support",
-    ],
   },
 ];
 
@@ -54,7 +42,7 @@ function Pricing() {
           hidden fees, no setup friction, no bloated settings maze.
         </p>
       </div>
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2">
         {tiers.map((tier) => (
           <article
             key={tier.name}

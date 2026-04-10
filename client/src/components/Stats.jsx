@@ -27,7 +27,7 @@ function Stats({ history }) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-3">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <article className="rounded-[24px] border border-brand/10 bg-surface p-5">
           <p className="text-sm text-brand/55">Today&apos;s focus time</p>
           <p className="mt-3 font-heading text-4xl text-brand">{focusMinutesToday}m</p>
@@ -44,7 +44,7 @@ function Stats({ history }) {
 
       <div className="mt-6 grid gap-5 xl:grid-cols-[1.35fr_0.9fr]">
         <div className="rounded-[24px] border border-brand/10 bg-surface p-4">
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-brand/55">Weekly focus minutes</p>
             <p className="text-xs uppercase tracking-[0.22em] text-brand/45">
               Last 7 days
@@ -76,7 +76,7 @@ function Stats({ history }) {
         </div>
 
         <div className="rounded-[24px] border border-brand/10 bg-surface p-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-brand/55">Recent sessions</p>
             <p className="text-xs uppercase tracking-[0.22em] text-brand/45">
               Latest 4

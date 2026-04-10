@@ -33,7 +33,7 @@ function Playlist({
             Pick the exact sound for this block
           </h2>
         </div>
-        <button className="button-secondary" onClick={onRefresh} type="button">
+        <button className="button-secondary w-full sm:w-auto" onClick={onRefresh} type="button">
           Refresh playlists
         </button>
       </div>
@@ -55,7 +55,7 @@ function Playlist({
             <button
               key={playlist.id}
               aria-pressed={selectedPlaylistId === playlist.id}
-              className={`flex w-full items-center gap-4 rounded-[24px] border p-4 text-left transition ${
+              className={`flex w-full items-start gap-4 rounded-[24px] border p-4 text-left transition sm:items-center ${
                 selectedPlaylistId === playlist.id
                   ? "border-panel/30 bg-[rgba(75,128,144,0.08)] text-brand"
                   : "border-brand/10 bg-surface text-brand hover:border-panel/30"
@@ -75,8 +75,8 @@ function Playlist({
                 </div>
               )}
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium text-brand">{playlist.name}</p>
-                <p className={`mt-1 text-sm ${selectedPlaylistId === playlist.id ? "text-brand/60" : "text-brand/55"}`}>
+                <p className="font-medium text-brand sm:truncate">{playlist.name}</p>
+                <p className={`mt-1 text-sm leading-6 ${selectedPlaylistId === playlist.id ? "text-brand/60" : "text-brand/55"}`}>
                   {playlist.tracks?.total || 0} tracks by {playlist.owner?.display_name || "Spotify"}
                 </p>
               </div>

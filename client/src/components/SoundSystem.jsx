@@ -47,8 +47,8 @@ function SoundSystem({
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          <label className="inline-flex items-center gap-3 rounded-full border border-brand/10 bg-surface px-4 py-3 text-sm text-brand">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <label className="inline-flex w-full items-center gap-3 rounded-full border border-brand/10 bg-surface px-4 py-3 text-sm text-brand sm:w-auto">
             <input
               aria-label="Enable sound mixing"
               checked={mixEnabled}
@@ -59,14 +59,14 @@ function SoundSystem({
             Mix 2 sounds
           </label>
           <button
-            className={muted ? "button-primary gap-2" : "button-secondary gap-2"}
+            className={`${muted ? "button-primary" : "button-secondary"} w-full gap-2 sm:w-auto`}
             onClick={onToggleMuteAll}
             type="button"
           >
             <VolumeX className="h-4 w-4" />
             {muted ? "Muted" : "Mute all"}
           </button>
-          <button className="button-secondary gap-2" onClick={onStopAll} type="button">
+          <button className="button-secondary w-full gap-2 sm:w-auto" onClick={onStopAll} type="button">
             Stop all
           </button>
         </div>
@@ -119,12 +119,12 @@ function SoundSystem({
       </div>
 
       <div className="mt-6 rounded-[24px] border border-brand/10 bg-surface px-4 py-4">
-        <label className="flex items-center gap-3 text-sm text-brand/70">
+        <label className="flex flex-wrap items-center gap-3 text-sm text-brand/70 sm:flex-nowrap">
           <Volume2 className="h-4 w-4 shrink-0 text-panel" />
-          <span className="min-w-[76px] text-brand">Volume</span>
+          <span className="text-brand sm:min-w-[76px]">Volume</span>
           <input
             aria-label="Ambient sound volume"
-            className="h-1.5 w-full appearance-none rounded-full bg-brand/15 accent-[var(--accent)]"
+            className="order-3 h-1.5 w-full appearance-none rounded-full bg-brand/15 accent-[var(--accent)] sm:order-none"
             max="1"
             min="0"
             onChange={(event) => onSetVolume(Number(event.target.value))}

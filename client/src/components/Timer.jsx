@@ -64,7 +64,7 @@ function Timer({
 
       <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
         <div className="mx-auto flex shrink-0 flex-col items-center">
-          <div className="relative h-[280px] w-[280px]">
+          <div className="relative h-[220px] w-[220px] sm:h-[280px] sm:w-[280px]">
             <svg className="h-full w-full -rotate-90" viewBox="0 0 260 260">
               <circle
                 className="stroke-brand/12"
@@ -88,10 +88,10 @@ function Timer({
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <p className="text-sm uppercase tracking-[0.28em] text-panel/80">
+              <p className="text-xs uppercase tracking-[0.28em] text-panel/80 sm:text-sm">
                 {modeLabels[currentMode]}
               </p>
-              <p className="mt-3 font-heading text-6xl leading-none text-brand tabular-nums sm:text-7xl">
+              <p className="mt-3 font-heading text-5xl leading-none text-brand tabular-nums sm:text-7xl">
                 {formatTime(remainingSeconds)}
               </p>
             </div>
@@ -106,7 +106,7 @@ function Timer({
             What are you working on?
           </label>
           <input
-            className="input-shell mt-4 w-full px-6 py-4 text-xl"
+            className="input-shell mt-4 w-full px-5 py-4 text-base sm:px-6 sm:text-xl"
             maxLength={80}
             onChange={(event) => setTaskLabel(event.target.value)}
             placeholder="Ship onboarding flow, write proposal, debug auth..."
