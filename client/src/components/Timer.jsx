@@ -50,8 +50,8 @@ function Timer({
               aria-pressed={currentMode === mode}
               className={`rounded-full px-4 py-2 text-sm transition ${
                 currentMode === mode
-                  ? "border border-panel/25 bg-panel text-white"
-                  : "border border-brand/10 bg-surface text-brand hover:border-panel/30"
+                  ? "border border-brand/15 bg-brand text-white"
+                  : "border border-brand/10 bg-surface text-brand hover:border-brand/25"
               }`}
               onClick={() => onModeSelect(mode)}
               type="button"
@@ -76,7 +76,7 @@ function Timer({
               />
               <motion.circle
                 animate={{ strokeDashoffset }}
-                className="stroke-panel"
+                className="stroke-brand"
                 cx="130"
                 cy="130"
                 fill="none"
@@ -88,7 +88,7 @@ function Timer({
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <p className="text-xs uppercase tracking-[0.28em] text-panel/80 sm:text-sm">
+              <p className="text-xs uppercase tracking-[0.28em] text-brand/80 sm:text-sm">
                 {modeLabels[currentMode]}
               </p>
               <p className="mt-3 font-heading text-5xl leading-none text-brand tabular-nums sm:text-7xl">
