@@ -1,6 +1,7 @@
-import { Menu, Sparkles } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import BrandMark from "../components/BrandMark";
 import FeatureGrid from "../components/FeatureGrid";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
@@ -14,9 +15,7 @@ function LandingPage() {
       <div className="section-shell pt-5">
         <header className="glass-panel flex items-center justify-between px-5 py-4 sm:px-6">
           <Link className="flex items-center gap-3" to="/">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand text-white">
-              <Sparkles className="h-5 w-5" />
-            </div>
+            <BrandMark className="h-11 w-11 shrink-0" />
             <div>
               <p className="font-heading text-xl text-brand">Pomodorofy</p>
               <p className="text-sm text-brand/55">

@@ -1,7 +1,8 @@
-import { Settings2, Sparkles } from "lucide-react";
+import { Settings2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
+import BrandMark from "../components/BrandMark";
 import Player from "../components/Player";
 import Playlist from "../components/Playlist";
 import Settings from "../components/Settings";
@@ -188,9 +189,7 @@ function AppPage() {
       <div className="section-shell pt-5">
         <header className="glass-panel flex flex-col gap-5 px-5 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
           <Link className="flex min-w-0 items-center gap-3" to="/">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand text-white">
-              <Sparkles className="h-5 w-5" />
-            </div>
+            <BrandMark className="h-11 w-11 shrink-0" />
             <div className="min-w-0">
               <p className="truncate font-heading text-xl text-brand">Pomodorofy</p>
               <p className="truncate text-sm text-brand/55">

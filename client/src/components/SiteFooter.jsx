@@ -1,6 +1,7 @@
 import { ArrowRight, Github, Instagram, Linkedin } from "lucide-react";
 import { useState } from "react";
 
+import BrandMark from "./BrandMark";
 import { readStoredJSON, writeStoredJSON } from "../lib/storage";
 
 function SiteFooter() {
@@ -31,7 +32,10 @@ function SiteFooter() {
     <footer className="section-shell pb-10 pt-6 sm:pb-12">
       <div className="glass-panel flex flex-col gap-10 px-6 py-8 sm:px-8 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-xl">
-          <p className="font-heading text-3xl text-brand">Pomodorofy</p>
+          <div className="flex items-center gap-3">
+            <BrandMark className="h-12 w-12 shrink-0" />
+            <p className="font-heading text-3xl text-brand">Pomodorofy</p>
+          </div>
           <p className="mt-3 text-brand/70">
             Deep work software for people who want better sessions, better
             breaks, and a soundtrack that knows when to step back.
