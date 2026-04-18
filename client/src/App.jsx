@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import CustomCursor from "./components/CustomCursor";
 
 const AppPage = lazy(() => import("./pages/AppPage"));
+const AuthPage = lazy(() => import("./pages/AuthPage"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<AuthPage mode="login" />} />
+          <Route path="/signup" element={<AuthPage mode="signup" />} />
           <Route path="/app" element={<AppPage />} />
         </Routes>
       </Suspense>

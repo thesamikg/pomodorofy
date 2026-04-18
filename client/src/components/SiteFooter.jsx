@@ -1,5 +1,6 @@
 import { ArrowRight, Github, Instagram, Linkedin } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { readStoredJSON, writeStoredJSON } from "../lib/storage";
 
@@ -70,7 +71,9 @@ function SiteFooter() {
           <div className="mt-6 flex flex-wrap gap-4 text-sm text-brand/50">
             <a href="#how-it-works">How it works</a>
             <a href="#pricing">Pricing</a>
-            <a href="/app">Web app</a>
+            <Link to="/login">Log in</Link>
+            <Link to="/signup">Sign up</Link>
+            <Link to="/app">Web app</Link>
           </div>
         </div>
       </div>

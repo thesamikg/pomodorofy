@@ -27,14 +27,17 @@ function LandingPage() {
           <nav className="hidden items-center gap-6 text-sm text-brand/70 md:flex">
             <a href="#how-it-works">How it works</a>
             <a href="#pricing">Pricing</a>
-            <Link className="button-primary" to="/app">
+            <Link className="font-medium text-brand/70 transition hover:text-brand" to="/login">
+              Log In
+            </Link>
+            <Link className="button-primary" to="/signup">
               Start Free
             </Link>
           </nav>
           <Link
-            aria-label="Open app"
+            aria-label="Create account"
             className="button-secondary md:hidden"
-            to="/app"
+            to="/signup"
           >
             <Menu className="h-4 w-4" />
           </Link>

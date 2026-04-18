@@ -21,13 +21,13 @@ function Hero() {
               your breaks, and keeps momentum visible.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Link className="button-primary gap-2" to="/app">
+              <Link className="button-primary gap-2" to="/signup">
                 Start Free
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <a className="button-secondary" href="#how-it-works">
-                See How It Works
-              </a>
+              <Link className="button-secondary" to="/login">
+                Log In
+              </Link>
             </div>
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-brand/60">
               <span className="tag-pill">Spotify-powered playback</span>
