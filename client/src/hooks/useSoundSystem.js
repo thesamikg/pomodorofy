@@ -392,6 +392,36 @@ export function useSoundSystem() {
     return audioContext;
   };
 
+  const pauseAll = async () => {
+    const audioContext = audioContextRef.current;
+    if (!audioContext) {
+      return;
+    }
+
+    try {
+      if (audioContext.state === "running") {
+        await audioContext.suspend();
+      }
+    } catch {
+      // Ignore suspend races.
+    }
+  };
+
+  const resumeAll = async () => {
+    const audioContext = audioContextRef.current;
+    if (!audioContext) {
+      return;
+    }
+
+    try {
+      if (audioContext.state === "suspended") {
+        await audioContext.resume();
+      }
+    } catch {
+      // Ignore resume races.
+    }
+  };
+
   const stopSound = (soundId) => {
     const graph = graphsRef.current.get(soundId);
 
@@ -794,8 +824,10 @@ export function useSoundSystem() {
     error,
     mixEnabled: preferences.mixEnabled,
     muted: preferences.muted,
+    pauseAll,
     secondarySoundId: preferences.secondarySoundId,
     selectedSoundId: preferences.selectedSoundId,
+    resumeAll,
     setMixEnabled,
     setVolume,
     soundOptions: useMemo(() => soundOptions, []),

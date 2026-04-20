@@ -162,6 +162,18 @@ function AppPage() {
   });
 
   const handleTimerToggle = async () => {
+    if (timer.isRunning) {
+      await soundSystem.pauseAll();
+
+      if (connected && spotify.isPlaying) {
+        spotify.pausePlayback().catch(() => {});
+      }
+    }
+
+    if (!timer.isRunning) {
+      await soundSystem.resumeAll();
+    }
+
     if (!timer.isRunning && timer.currentMode === "focus") {
       await soundSystem.autoPlaySelectedSounds();
     }
