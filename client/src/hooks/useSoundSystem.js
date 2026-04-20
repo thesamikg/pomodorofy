@@ -3,7 +3,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { readStoredJSON, writeStoredJSON } from "../lib/storage";
 
 const storageKey = "pomodorofy-sound-system";
-const bufferDurationSeconds = 4;
+const bufferDurationSeconds = 24;
+const fadeSeconds = 0.25;
 
 const soundDefinitions = {
   rain: {
@@ -89,35 +90,47 @@ const soundDefinitions = {
   },
   coffeeShop: {
     label: "Coffee Shop Ambience",
-    description: "Room tone and soft midrange murmur without distracting peaks.",
+    description: "Speech-like room murmur with gentle crowd motion and soft HVAC bed.",
     outputScale: 0.44,
-    lfo: { rate: 0.14, depth: 0.05, wave: "triangle" },
+    lfo: { rate: 0.09, depth: 0.06, wave: "triangle" },
     layers: [
       {
-        buffer: "pink",
-        playbackRate: 1.01,
-        gain: 0.18,
+        buffer: "brown",
+        playbackRate: 0.98,
+        gain: 0.09,
         filters: [
-          { type: "highpass", frequency: 170 },
-          { type: "lowpass", frequency: 2500 },
+          { type: "highpass", frequency: 80 },
+          { type: "lowpass", frequency: 520 },
         ],
       },
       {
-        buffer: "brown",
-        playbackRate: 0.94,
-        gain: 0.12,
+        buffer: "pink",
+        playbackRate: 1.02,
+        gain: 0.16,
         filters: [
-          { type: "bandpass", frequency: 420, q: 0.55 },
-          { type: "lowpass", frequency: 920 },
+          { type: "highpass", frequency: 140 },
+          { type: "bandpass", frequency: 520, q: 0.7 },
+          { type: "lowpass", frequency: 1700 },
+        ],
+      },
+      {
+        buffer: "pink",
+        playbackRate: 0.97,
+        gain: 0.11,
+        filters: [
+          { type: "highpass", frequency: 220 },
+          { type: "bandpass", frequency: 1050, q: 0.85 },
+          { type: "lowpass", frequency: 2400 },
         ],
       },
       {
         buffer: "white",
-        playbackRate: 1.18,
-        gain: 0.04,
+        playbackRate: 1.12,
+        gain: 0.022,
         filters: [
-          { type: "bandpass", frequency: 1900, q: 0.7 },
-          { type: "lowpass", frequency: 3200 },
+          { type: "highpass", frequency: 900 },
+          { type: "bandpass", frequency: 1700, q: 1.1 },
+          { type: "lowpass", frequency: 3800 },
         ],
       },
     ],
@@ -265,6 +278,52 @@ function createNoiseBuffer(audioContext, color) {
   return buffer;
 }
 
+function randomBetween(min, max) {
+  return min + Math.random() * (max - min);
+}
+
+function connectParamLfo(audioContext, param, { rate, depth, wave = "sine" }) {
+  const oscillator = audioContext.createOscillator();
+  oscillator.type = wave;
+  oscillator.frequency.value = rate;
+
+  const gain = audioContext.createGain();
+  gain.gain.value = depth;
+
+  oscillator.connect(gain);
+  gain.connect(param);
+  oscillator.start();
+
+  return { oscillator, gain };
+}
+
+async function ensureNoiseWorklet(audioContext, workletState) {
+  if (!audioContext?.audioWorklet) {
+    return false;
+  }
+
+  if (workletState.loaded) {
+    return true;
+  }
+
+  if (!workletState.loading) {
+    workletState.loading = audioContext.audioWorklet
+      .addModule(new URL("../audio/noiseWorklet.js", import.meta.url))
+      .then(() => {
+        workletState.loaded = true;
+      })
+      .catch(() => {
+        workletState.loaded = false;
+      })
+      .finally(() => {
+        workletState.loading = null;
+      });
+  }
+
+  await workletState.loading;
+  return workletState.loaded;
+}
+
 function useLatestRef(value) {
   const ref = useRef(value);
 
@@ -287,6 +346,7 @@ export function useSoundSystem() {
   const [error, setError] = useState("");
   const audioContextRef = useRef(null);
   const noiseBuffersRef = useRef({});
+  const noiseWorkletRef = useRef({ loaded: false, loading: null });
   const graphsRef = useRef(new Map());
   const preferencesRef = useLatestRef(preferences);
   const activeSoundIdsRef = useLatestRef(activeSoundIds);
@@ -321,6 +381,8 @@ export function useSoundSystem() {
       await audioContext.resume();
     }
 
+    await ensureNoiseWorklet(audioContext, noiseWorkletRef.current);
+
     ["white", "pink", "brown"].forEach((color) => {
       if (!noiseBuffersRef.current[color]) {
         noiseBuffersRef.current[color] = createNoiseBuffer(audioContext, color);
@@ -337,29 +399,60 @@ export function useSoundSystem() {
       return;
     }
 
-    graph.sources.forEach((source) => {
+    const audioContext = audioContextRef.current;
+    const now = audioContext?.currentTime ?? 0;
+
+    if (graph.master && audioContext) {
       try {
-        source.stop();
+        graph.master.gain.cancelScheduledValues(now);
+        graph.master.gain.setTargetAtTime(0.0001, now, Math.max(0.01, fadeSeconds / 3));
       } catch {
-        // Ignore stop races.
+        // Ignore scheduling races.
+      }
+    }
+
+    const stopAt = audioContext ? now + fadeSeconds + 0.02 : 0;
+
+    graph.sources.forEach((source) => {
+      if (typeof source.stop === "function") {
+        try {
+          source.stop(stopAt);
+        } catch {
+          try {
+            source.stop();
+          } catch {
+            // Ignore stop races.
+          }
+        }
       }
     });
 
     if (graph.lfo) {
       try {
-        graph.lfo.stop();
+        graph.lfo.stop(stopAt);
       } catch {
         // Ignore stop races.
       }
     }
 
+    graph.modulators?.forEach((modulator) => {
+      try {
+        modulator.oscillator.stop(stopAt);
+      } catch {
+        // Ignore stop races.
+      }
+    });
+
     [
       ...graph.sources,
       ...graph.filters,
       ...graph.layerGains,
+      ...(graph.panners || []),
       graph.master,
       graph.lfo,
       graph.lfoGain,
+      ...(graph.modulators?.flatMap((modulator) => [modulator.oscillator, modulator.gain]) ||
+        []),
     ].forEach(disconnectNode);
 
     graphsRef.current.delete(soundId);
@@ -412,28 +505,85 @@ export function useSoundSystem() {
     }
 
     const master = audioContext.createGain();
-    master.gain.value = nextPreferences.muted
+    const targetMasterGain = nextPreferences.muted
       ? 0.0001
       : Math.max(0.0001, clampVolume(nextPreferences.volume) * sound.outputScale);
+    master.gain.value = 0.0001;
     master.connect(audioContext.destination);
 
     const sources = [];
     const filters = [];
     const layerGains = [];
+    const panners = [];
+    const modulators = [];
 
     sound.layers.forEach((layer) => {
-      const source = audioContext.createBufferSource();
-      source.buffer = noiseBuffersRef.current[layer.buffer];
-      source.loop = true;
-      source.playbackRate.value = layer.playbackRate;
+      const workletReady = noiseWorkletRef.current.loaded && audioContext.audioWorklet;
+      const source = workletReady
+        ? new AudioWorkletNode(audioContext, "noise-generator", {
+            numberOfInputs: 0,
+            numberOfOutputs: 1,
+            outputChannelCount: [1],
+            processorOptions: { color: layer.buffer },
+          })
+        : audioContext.createBufferSource();
+
+      if (!workletReady) {
+        source.buffer = noiseBuffersRef.current[layer.buffer];
+        source.loop = true;
+        source.playbackRate.value = layer.playbackRate;
+      }
 
       const { currentNode, nodes } = createFilterChain(audioContext, source, layer.filters);
       const gainNode = audioContext.createGain();
       gainNode.gain.value = layer.gain;
 
+      const pannerNode = audioContext.createStereoPanner?.();
+      let outputNode = gainNode;
+
+      if (pannerNode) {
+        pannerNode.pan.value = randomBetween(-0.18, 0.18);
+        gainNode.connect(pannerNode);
+        outputNode = pannerNode;
+        panners.push(pannerNode);
+
+        modulators.push(
+          connectParamLfo(audioContext, pannerNode.pan, {
+            rate: randomBetween(0.01, 0.03),
+            depth: randomBetween(0.02, 0.08),
+            wave: "sine",
+          }),
+        );
+      }
+
       currentNode.connect(gainNode);
-      gainNode.connect(master);
-      source.start();
+      outputNode.connect(master);
+
+      modulators.push(
+        connectParamLfo(audioContext, gainNode.gain, {
+          rate: randomBetween(0.02, 0.06),
+          depth: layer.gain * randomBetween(0.02, 0.06),
+          wave: "sine",
+        }),
+      );
+
+      const filterTarget = nodes[nodes.length - 1];
+      if (filterTarget?.frequency) {
+        modulators.push(
+          connectParamLfo(audioContext, filterTarget.frequency, {
+            rate: randomBetween(0.005, 0.02),
+            depth: Math.max(3, filterTarget.frequency.value * randomBetween(0.002, 0.01)),
+            wave: "sine",
+          }),
+        );
+      }
+
+      if (!workletReady) {
+        const startOffset = source.buffer
+          ? randomBetween(0, Math.max(0, source.buffer.duration - 0.05))
+          : 0;
+        source.start(0, startOffset);
+      }
 
       sources.push(source);
       filters.push(...nodes);
@@ -459,10 +609,16 @@ export function useSoundSystem() {
       lfo.start();
     }
 
+    const now = audioContext.currentTime;
+    master.gain.cancelScheduledValues(now);
+    master.gain.setTargetAtTime(targetMasterGain, now, Math.max(0.01, fadeSeconds / 3));
+
     graphsRef.current.set(soundId, {
       sources,
       filters,
       layerGains,
+      panners,
+      modulators,
       lfo,
       lfoGain,
       master,
