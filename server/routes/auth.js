@@ -21,10 +21,25 @@ router.post("/spotify", async (req, res, next) => {
       return;
     }
 
+    const configuredRedirectUri = process.env.REDIRECT_URI;
+    if (!configuredRedirectUri) {
+      next(
+        Object.assign(new Error("Server redirect URI is not configured."), {
+          status: 500,
+        }),
+      );
+      return;
+    }
+
+    if (redirectUri && redirectUri !== configuredRedirectUri) {
+      res.status(400).json({ error: "Invalid redirect URI." });
+      return;
+    }
+
     const tokens = await exchangeAuthorizationCode({
       code,
       codeVerifier,
-      redirectUri,
+      redirectUri: configuredRedirectUri,
     });
 
     setSpotifyCookies(res, tokens);

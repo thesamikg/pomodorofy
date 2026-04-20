@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import helmet from "helmet";
 
 import authRoutes from "./routes/auth.js";
 
@@ -17,6 +18,12 @@ const configuredOrigins = (process.env.CLIENT_ORIGINS || "")
 const allowedOrigins = new Set([...defaultOrigins, ...configuredOrigins]);
 
 app.set("trust proxy", 1);
+app.disable("x-powered-by");
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
 app.use(
   cors({
     origin(origin, callback) {
@@ -30,7 +37,7 @@ app.use(
     credentials: true,
   }),
 );
-app.use(express.json());
+app.use(express.json({ limit: "32kb" }));
 app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.get("/health", (_req, res) => {
