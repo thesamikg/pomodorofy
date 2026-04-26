@@ -13,6 +13,11 @@ function Stats({ history }) {
   const streak = getCurrentStreak(history);
   const weeklyData = getWeeklyChartData(history);
   const recentSessions = history.slice(0, 4);
+  const chartTextColor = "rgb(var(--brand-rgb) / 0.65)";
+  const chartTooltipBackground = "var(--panel-solid)";
+  const chartBorderColor = "var(--line)";
+  const chartCursorColor = "var(--soft-surface)";
+  const chartBarColor = "rgb(var(--accent-rgb))";
 
   return (
     <section className="glass-panel p-5 sm:p-6">
@@ -56,20 +61,20 @@ function Stats({ history }) {
                 <XAxis
                   axisLine={false}
                   dataKey="label"
-                  tick={{ fill: "rgba(39,75,120,0.65)", fontSize: 12 }}
+                  tick={{ fill: chartTextColor, fontSize: 12 }}
                   tickLine={false}
                 />
                 <Tooltip
                   contentStyle={{
-                    background: "#ffffff",
-                    border: "1px solid rgba(39,75,120,0.12)",
+                    background: chartTooltipBackground,
+                    border: `1px solid ${chartBorderColor}`,
                     borderRadius: "16px",
-                    color: "#274b78",
+                    color: "rgb(var(--brand-rgb))",
                   }}
-                  cursor={{ fill: "rgba(75,128,144,0.08)" }}
+                  cursor={{ fill: chartCursorColor }}
                   formatter={(value) => [`${value} min`, "Focus"]}
                 />
-                <Bar dataKey="minutes" fill="#4b8090" radius={[14, 14, 0, 0]} />
+                <Bar dataKey="minutes" fill={chartBarColor} radius={[14, 14, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

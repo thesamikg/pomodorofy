@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { readStoredJSON, writeStoredJSON } from "../lib/storage";
+import ThemeToggle from "../components/ThemeToggle";
 
 const authContent = {
   login: {
@@ -172,7 +173,7 @@ function AuthPage({ mode = "login" }) {
   };
 
   return (
-    <div className="page-shell bg-[linear-gradient(180deg,#f7fbfc_0%,#ffffff_30%,#fbfdff_100%)]">
+    <div className="page-shell">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-[-9rem] top-14 h-72 w-72 rounded-full bg-panel/8 blur-[110px]" />
         <div className="absolute right-[-5rem] top-[-3rem] h-80 w-80 rounded-full bg-brand/8 blur-[130px]" />
@@ -196,6 +197,7 @@ function AuthPage({ mode = "login" }) {
             <Link className="button-secondary" to="/">
               Back to home
             </Link>
+            <ThemeToggle />
             <Link className="button-secondary" to="/app">
               Open app
             </Link>
@@ -205,8 +207,8 @@ function AuthPage({ mode = "login" }) {
 
       <main className="section-shell relative z-10 pb-14 pt-8 sm:pt-10">
         <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:gap-8">
-          <section className="glass-panel relative overflow-hidden bg-[linear-gradient(180deg,rgba(246,251,253,0.98),rgba(255,255,255,0.94)_38%,#ffffff_100%)] px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(39,75,120,0.12),transparent_42%),radial-gradient(circle_at_88%_18%,rgba(75,128,144,0.12),transparent_22%),linear-gradient(180deg,rgba(39,75,120,0.05),rgba(255,255,255,0)_36%)]" />
+          <section className="glass-panel relative overflow-hidden px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(var(--brand-rgb),0.12),transparent_42%),radial-gradient(circle_at_88%_18%,rgba(var(--accent-rgb),0.12),transparent_22%),linear-gradient(180deg,rgba(var(--brand-rgb),0.05),transparent_36%)]" />
             <div className="absolute left-[-5rem] top-8 h-40 w-40 rounded-full bg-brand/6 blur-[90px]" />
             <div className="absolute right-8 top-20 h-24 w-24 rounded-full bg-panel/10 blur-[45px]" />
             <div className="relative">
@@ -226,7 +228,7 @@ function AuthPage({ mode = "login" }) {
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 {statCards.map((card) => (
                   <div
-                    className="rounded-[24px] border border-brand/10 bg-white/85 px-4 py-4 shadow-[0_14px_32px_rgba(39,75,120,0.08)] backdrop-blur"
+                    className="rounded-[24px] border border-brand/10 bg-surface/85 px-4 py-4 shadow-[0_14px_32px_rgba(39,75,120,0.08)] backdrop-blur"
                     key={card.label}
                   >
                     <p className="text-sm text-brand/55">{card.label}</p>
@@ -243,7 +245,7 @@ function AuthPage({ mode = "login" }) {
 
                   return (
                     <div
-                      className="flex gap-4 rounded-[26px] border border-brand/10 bg-white px-5 py-5"
+                      className="flex gap-4 rounded-[26px] border border-brand/10 bg-surface px-5 py-5"
                       key={item.title}
                     >
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand text-white">
@@ -451,7 +453,7 @@ function AuthPage({ mode = "login" }) {
               </div>
 
               {error ? (
-                <div className="rounded-[22px] border border-[#b94b5c]/18 bg-[#fff4f6] px-4 py-3 text-sm text-[#9d3750]">
+                <div className="rounded-[22px] border px-4 py-3 text-sm" style={{ background: "var(--danger-bg)", borderColor: "var(--danger-border)", color: "var(--danger-text)" }}>
                   {error}
                 </div>
               ) : null}

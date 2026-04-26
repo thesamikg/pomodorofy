@@ -8,6 +8,7 @@ import Playlist from "../components/Playlist";
 import Settings from "../components/Settings";
 import SoundSystem from "../components/SoundSystem";
 import Stats from "../components/Stats";
+import ThemeToggle from "../components/ThemeToggle";
 import Timer from "../components/Timer";
 import { useNotifications } from "../hooks/useNotifications";
 import { useSoundSystem } from "../hooks/useSoundSystem";
@@ -226,6 +227,7 @@ function AppPage() {
               <Settings2 className="h-4 w-4" />
               Settings
             </button>
+            <ThemeToggle className="w-full sm:w-auto" />
             <Link className="button-secondary w-full sm:w-auto" to="/">
               Back to landing
             </Link>

@@ -6,7 +6,7 @@
 
 :root {
   color-scheme: light;
-  --bg: #ffffff;
+  --bg: #f7fbfc;
   --panel: #ffffff;
   --panel-solid: #ffffff;
   --line: rgba(39, 75, 120, 0.12);
@@ -17,6 +17,43 @@
   --primary: #274b78;
   --primary-strong: #274b78;
   --secondary: #4b8090;
+  --brand-rgb: 39 75 120;
+  --panel-rgb: 75 128 144;
+  --surface-rgb: 255 255 255;
+  --accent-rgb: 75 128 144;
+  --muted-rgb: 122 145 171;
+  --soft-surface: rgba(75, 128, 144, 0.08);
+  --soft-surface-strong: rgba(75, 128, 144, 0.12);
+  --danger-bg: #fff4f6;
+  --danger-border: rgba(185, 75, 92, 0.18);
+  --danger-text: #9d3750;
+  --shadow-glow: 0 0 0 1px rgba(39, 75, 120, 0.08), 0 18px 40px rgba(39, 75, 120, 0.1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #08111f;
+  --panel: rgba(15, 27, 44, 0.9);
+  --panel-solid: #101b2d;
+  --line: rgba(191, 219, 236, 0.14);
+  --line-strong: rgba(191, 219, 236, 0.26);
+  --text: #dcecff;
+  --muted: #8da6bb;
+  --accent: #78bdcc;
+  --primary: #dcecff;
+  --primary-strong: #2f7892;
+  --secondary: #78bdcc;
+  --brand-rgb: 220 236 255;
+  --panel-rgb: 120 189 204;
+  --surface-rgb: 16 27 45;
+  --accent-rgb: 120 189 204;
+  --muted-rgb: 141 166 187;
+  --soft-surface: rgba(120, 189, 204, 0.1);
+  --soft-surface-strong: rgba(120, 189, 204, 0.16);
+  --danger-bg: rgba(185, 75, 92, 0.14);
+  --danger-border: rgba(244, 128, 150, 0.28);
+  --danger-text: #ffb8c4;
+  --shadow-glow: 0 0 0 1px rgba(191, 219, 236, 0.08), 0 18px 44px rgba(0, 0, 0, 0.32);
 }
 
 * {
@@ -64,8 +101,8 @@ select {
 }
 
 ::selection {
-  background: rgba(75, 128, 144, 0.22);
-  color: #274b78;
+  background: rgba(var(--accent-rgb), 0.26);
+  color: rgb(var(--brand-rgb));
 }
 
 ::-webkit-scrollbar {
@@ -73,12 +110,12 @@ select {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(39, 75, 120, 0.08);
+  background: rgba(var(--brand-rgb), 0.08);
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(75, 128, 144, 0.32);
+  background: rgba(var(--accent-rgb), 0.32);
 }
 
 @layer components {
@@ -103,16 +140,16 @@ select {
 
   .button-secondary {
     @apply inline-flex items-center justify-center rounded-full border px-6 py-3 font-medium transition duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
-    background: #ffffff;
-    border-color: rgba(39, 75, 120, 0.14);
-    color: #274b78;
+    background: var(--panel-solid);
+    border-color: var(--line);
+    color: rgb(var(--brand-rgb));
   }
 
   .tag-pill {
     @apply inline-flex items-center rounded-full border px-3 py-1 text-sm;
-    background: rgba(75, 128, 144, 0.08);
-    border-color: rgba(75, 128, 144, 0.14);
-    color: #274b78;
+    background: var(--soft-surface);
+    border-color: var(--line);
+    color: rgb(var(--brand-rgb));
   }
 
   .headline {
@@ -125,13 +162,13 @@ select {
 
   .input-shell {
     @apply rounded-2xl border px-4 py-3 focus:outline-none focus:ring-2;
-    background: #ffffff;
-    border-color: rgba(39, 75, 120, 0.18);
-    color: #274b78;
-    --tw-ring-color: rgba(75, 128, 144, 0.22);
+    background: var(--panel-solid);
+    border-color: var(--line-strong);
+    color: rgb(var(--brand-rgb));
+    --tw-ring-color: rgba(var(--accent-rgb), 0.24);
   }
 
   .input-shell::placeholder {
-    color: rgba(39, 75, 120, 0.46);
+    color: rgba(var(--brand-rgb), 0.46);
   }
 }

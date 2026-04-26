@@ -8,6 +8,7 @@ import HowItWorks from "../components/HowItWorks";
 import Pricing from "../components/Pricing";
 import SiteFooter from "../components/SiteFooter";
 import Testimonials from "../components/Testimonials";
+import ThemeToggle from "../components/ThemeToggle";
 
 function LandingPage() {
   return (
@@ -29,17 +30,21 @@ function LandingPage() {
             <Link className="font-medium text-brand/70 transition hover:text-brand" to="/login">
               Log In
             </Link>
+            <ThemeToggle className="px-4 py-2 text-sm" />
             <Link className="button-primary" to="/signup">
               Start Free
             </Link>
           </nav>
-          <Link
-            aria-label="Create account"
-            className="button-secondary md:hidden"
-            to="/signup"
-          >
-            <Menu className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle className="px-4 py-3" />
+            <Link
+              aria-label="Create account"
+              className="button-secondary px-4"
+              to="/signup"
+            >
+              <Menu className="h-4 w-4" />
+            </Link>
+          </div>
         </header>
       </div>
 

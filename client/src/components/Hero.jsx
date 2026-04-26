@@ -41,14 +41,14 @@ function Hero() {
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             className="mx-auto w-full max-w-xl"
           >
-            <div className="relative mx-auto w-full max-w-[480px] rounded-[34px] border border-[#274b78]/12 bg-[#274b78] p-2.5 shadow-[0_24px_60px_rgba(39,75,120,0.18)]">
+            <div className="relative mx-auto w-full max-w-[480px] rounded-[34px] border border-panel/25 bg-[var(--primary-strong)] p-2.5 shadow-[0_24px_60px_rgba(39,75,120,0.18)]">
               <div className="glass-panel relative rounded-[28px] p-6">
                 <div className="flex items-center justify-between text-sm text-brand/60">
                   <span>Today&apos;s ritual</span>
                   <span>Session 2 of 4</span>
                 </div>
                 <div className="mt-8 flex items-center justify-center">
-                  <div className="relative flex h-56 w-56 items-center justify-center rounded-full border border-[#274b78]/15 bg-[#274b78]">
+                  <div className="relative flex h-56 w-56 items-center justify-center rounded-full border border-panel/25 bg-[var(--primary-strong)]">
                     <div className="absolute inset-3 rounded-full border border-panel/45" />
                     <div className="text-center">
                       <p className="text-sm uppercase tracking-[0.32em] text-white/80">
@@ -61,19 +61,19 @@ function Hero() {
                   </div>
                 </div>
                 <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-2xl border border-panel/30 bg-white p-4">
+                  <div className="rounded-2xl border border-panel/30 bg-surface p-4">
                     <p className="text-sm text-panel/75">Playlist</p>
                     <p className="mt-2 font-medium text-brand">
                       Flow State Cuts
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-[#274b78]/30 bg-white p-4">
+                  <div className="rounded-2xl border border-brand/30 bg-surface p-4">
                     <p className="text-sm text-brand/70">Track</p>
                     <p className="mt-2 font-medium text-brand">
                       The Difference
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-panel/30 bg-white p-4">
+                  <div className="rounded-2xl border border-panel/30 bg-surface p-4">
                     <p className="text-sm text-panel/75">Streak</p>
                     <p className="mt-2 font-medium text-brand">9 days</p>
                   </div>

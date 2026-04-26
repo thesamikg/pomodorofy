@@ -4,18 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: "#274b78",
-        panel: "#4b8090",
-        surface: "#ffffff",
-        accent: "#4b8090",
-        muted: "#7a91ab",
+        brand: "rgb(var(--brand-rgb) / <alpha-value>)",
+        panel: "rgb(var(--panel-rgb) / <alpha-value>)",
+        surface: "rgb(var(--surface-rgb) / <alpha-value>)",
+        accent: "rgb(var(--accent-rgb) / <alpha-value>)",
+        muted: "rgb(var(--muted-rgb) / <alpha-value>)",
       },
       fontFamily: {
         heading: ['"Bricolage Grotesque"', "sans-serif"],
         body: ['"DM Sans"', "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(39,75,120,0.08), 0 18px 40px rgba(39,75,120,0.1)",
+        glow: "var(--shadow-glow)",
       },
       animation: {
         float: "float 8s ease-in-out infinite",
